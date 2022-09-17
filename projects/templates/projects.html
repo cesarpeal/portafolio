@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+
+{% block title %} {{title}} {% endblock %}
+
+{% block content %}
+	<div id="projects-box">
+		{% for project in projects %}
+		<article class="project">
+			<div class="data">	
+				<h2>{{project.title}}</h2>
+				<h3>Código del proyecto: <a href="{{project.link}}">{{project.link}}</a></h3>
+				<p>{{page.obj}}</p>
+			</div>
+			<div id="img-box">
+			{% for image in images %}
+				{% if image.project_image_id == project.id %}
+					<img class="project-image" src="{{image.image.url}}">
+				{% endif %}
+			{% endfor %}
+			</div>
+		</article>
+
+		{% if projects.has_other_pages %}
+		<div class="paginator">
+		  <ul class="numbers">
+			<div class="pagination">
+			{% for i in projects.paginator.page_range %}
+			  {% if projects.number == i %}
+			    <li><span>{{ i }} <span></span></span></li>
+			  {% else %}
+			    <li><a href="?page={{ i }}">{{ i }}</a></li>
+			  {% endif %}
+			{% endfor %}
+			</div>
+		  </ul>
+		</div>
+		{% endif %}
+		{% endfor %}
+	</div>
+{% endblock %}
